@@ -3,7 +3,11 @@ node {
     git branch: 'master', url: 'https://github.com/KarinAngela/BackEndII.git'
   }
 
-  stage("Build project with test execution") {
-    sh "./mvnw build"
+  stage("Build") {
+    sh "./mvnw -B -DskipTests clean package"
+  }
+
+  stage("Test") {
+    sh "./mvnw test"
   }
 }
