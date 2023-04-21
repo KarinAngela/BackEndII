@@ -4,10 +4,10 @@ node {
   }
 
   stage("Build") {
-    mvn -B -DskipTests clean package
+    sh "./mvnw -B -DskipTests clean package"
   }
 
   stage("Test") {
-    mvn test
+    sh "./mvnw test"
   }
 }
