@@ -14,7 +14,7 @@
     <name>back2</name>
     <description>Project for Spring boot and back 2</description>
     <properties>
-        <java.version>8</java.version>
+        <java.version>19</java.version>
     </properties>
     <dependencies>
         <dependency>
