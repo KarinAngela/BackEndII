@@ -8,6 +8,6 @@ node {
   }
 
   stage("Test") {
-    sh "./mvnw test"
+    sh "./mvnw clean test"
   }
 }

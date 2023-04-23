@@ -1,11 +1,10 @@
-package API.back2.TestController;
+package API.back2.controllers;
 
 import API.back2.dto.DTOCadastroProduto;
 import API.back2.enums.Categoria;
 import API.back2.enums.NivelAcesso;
 import API.back2.enums.Status;
 import API.back2.models.Produto;
-
 import API.back2.models.Usuario;
 import API.back2.repositories.ProdutoRepository;
 import API.back2.repositories.UsuarioRepository;
@@ -14,16 +13,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -31,7 +30,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -39,12 +39,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class) //anotação usada para informar o JUnit que a execução dos testes será feita pelo Spring Runner
-//@WebMvcTest(ProdutoController.class) //anotação usada para configurar o teste de unidade para um controlador específico
-// Para usar o carregamento customizado do MVC (função setup), não se pode usar
-// o WebMvcTest, mas sim o SpringBootTest
-// O que tá dentro do parenteses eu não faço ideia do que seja :)
+@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles(value = "test")
 public class TestProdutoController {
     @Autowired
     private WebApplicationContext context;
@@ -66,7 +63,7 @@ public class TestProdutoController {
     // Spring Security, etc)
     // Deixa os testes bem mais lentos de executar, porém
     // resolve o problema do TokenService :)
-    @Before
+    @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
