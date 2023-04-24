@@ -1,0 +1,202 @@
+openapi: 3.1.0
+info:
+  version: '3.0'
+  title: BackII
+  description: Doc do back II
+  contact:
+    email: kahnogueira0407@gmail.com
+  servers:
+    # Added by API Auto Mocking Plugin
+    - description: SwaggerHub API Auto Mocking
+url: https://virtserver.swaggerhub.com/KAHNOGUEIRA0407/BackII/3.0
+tags:
+  - name: admin
+    description: Perfil dos usuarios admin
+  - name: colaborador
+    description: Perfil dos colaborador
+
+paths:
+  '/produtos':
+    get:
+      tags:
+        - admin
+        - colaborador
+      summary:  Consulta produtos
+      description: Consulta produtos
+      operationId: consultaProduto
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/produtos'
+
+    post:
+      tags:
+        - admin
+        - colaborador
+      summary: Incluir produto
+      description: Incluir produto
+      operationId: incluirProduto
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Produtos'
+      responses:
+        '201':
+          description: Criado com sucesso
+
+  '/produto/{idProduto}':
+    put:
+      tags:
+        - admin
+        - colaborador
+      summary: Atualiza o dados de produto
+      description: Atualiza os dados do produto
+      operationId: atualizaProduto
+      parameters:
+        - name: idProduto
+          in: path
+          required: true
+          description: id do Produtos
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Produtos'
+      responses:
+        '200':
+          description: Alteração realizada
+        '400':
+          description: Não foi possivel fazer alteração
+    
+    delete:
+      tags:
+        - admin
+        - colaborador
+      summary: Apagar produto
+      description: Apaga um produto
+      operationId: apagaProduto
+      parameters:
+        - name: idProduto
+          in: path
+          required: true
+          description: id do Produtos
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Apagado com sucesso
+
+  '/usuarios':
+    get:
+      tags:
+        - admin
+      summary:  Consulta usuarios
+      description: Consulta usuarios
+      operationId: consultaUsuarios
+      responses:
+        '200':
+          description: sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Usuario'
+
+    post:
+      tags:
+        - admin
+      summary: Incluir usuario
+      description: Incluir usuario
+      operationId: incluirUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usurio'
+      responses:
+        '201':
+          description: Criado com sucesso
+
+  '/produto/{idUsuario}':
+    put:
+      tags:
+        - admin
+      summary: Atualiza o dados de usuario
+      description: Atualiza os dados do usuario
+      operationId: atualizaUsuario
+      parameters:
+        - name: idUsuario
+          in: path
+          required: true
+          description: id do usuario
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Usuario'
+      responses:
+        '200':
+          description: Alteração realizada
+        '400':
+          description: Não foi possivel fazer alteração
+    
+    delete:
+      tags:
+        - admin
+      summary: Apagar usuario
+      description: Apaga um usuario
+      operationId: apagaUsuario
+      parameters:
+        - name: idUsuario
+          in: path
+          required: true
+          description: id do usuario
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Apagado com sucesso
+
+components:
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        nome:
+          type: string
+        email:
+          type: string
+          format: email
+        login:
+          type: string
+        senha:
+          type: string
+        dataCadastro:
+          type: string
+          format: date
+        nivelAcesso: string
+
+    Produto:
+      type: object
+      properties:
+        nome:
+          type: string
+        preco_unitario:
+          type: float
+        categoria:
+          type: string
+        descricao:
+          type: string
+        status:
+          type: string
